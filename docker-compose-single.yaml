@@ -65,7 +65,7 @@ services:
       co.elastic.logs/module: elasticsearch
     volumes:
       - ./data/certs:/usr/share/elasticsearch/config/certs
-      - esdata01:/usr/share/elasticsearch/data
+      - esdata_single:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -109,7 +109,7 @@ services:
       co.elastic.logs/module: kibana
     volumes:
       - ./data/certs:/usr/share/kibana/config/certs
-      - kibanadata:/usr/share/kibana/data
+      - kibanadata_single:/usr/share/kibana/data
     ports:
       - ${KIBANA_PORT}:5601
     environment:
@@ -133,5 +133,5 @@ services:
       retries: 120
 
 volumes:
-  esdata01:
-  kibanadata:
+  esdata_single:
+  kibanadata_single:

@@ -1,0 +1,10 @@
+PUT /users
+
+PUT /users/_doc/1
+{
+  "first_name": "Alexander",
+  "last_name": "Kulba",
+  "tags": ["prograammer", "IT"]
+}
+
+GET /users/_doc/1

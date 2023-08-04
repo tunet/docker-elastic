@@ -1,0 +1,32 @@
+PUT /products
+{
+  "mappings": {
+    "properties": {
+      "name": { "type": "text" },
+      "price": { "type": "float" },
+      "category_id": { "type": "keyword" },
+      "tags": { "type": "keyword" }
+    }
+  }
+}
+
+PUT /products/_doc/1
+{
+  "name": "Чайник",
+  "price": 50.25,
+  "category_id": "abc",
+  "tags": ["tag 1", "tag 2", "tag 3"]
+}
+
+GET /products/_doc/1
+
+GET /products/_mapping
+
+PUT /products/_doc/2
+{
+  "name": "Кофемашина",
+  "price": 250.50,
+  "tags": "tag 1"
+}
+
+GET /products/_doc/2
