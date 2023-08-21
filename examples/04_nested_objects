@@ -1,0 +1,100 @@
+DELETE /users
+
+GET /users/_mapping
+
+PUT /users
+{
+  "mappings": {
+    "properties": {
+      "first_name": {
+        "type": "text",
+        "fields": {
+          "keyword": { "type": "keyword" }
+        }
+      },
+      "last_name": { "type": "text" },
+      "email": { "type": "keyword" },
+      "labels": {
+        "properties": {
+          "name": { "type": "keyword" },
+          "value": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+PUT /users/_doc/1
+{
+  "first_name": "Alexander",
+  "last_name": "Kulba",
+  "labels": [
+    { "name": "role",     "value": "moderator" },
+    { "name": "position", "value": "administrator" }
+  ]
+}
+
+GET /users/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "labels.name": "role"
+          }
+        },
+        {
+          "term": {
+            "labels.value": "administrator"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+
+PUT /users
+{
+  "mappings": {
+    "properties": {
+      "first_name": { "type": "text" },
+      "last_name": { "type": "text" },
+      "email": { "type": "keyword" },
+      "labels": {
+        "type": "nested",
+        "properties": {
+          "name": { "type": "keyword" },
+          "value": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+GET /users/_search
+{
+  "query": {
+    "nested": {
+      "path": "labels",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "labels.name": "role"
+              }
+            },
+            {
+              "term": {
+                "labels.value": "moderator"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

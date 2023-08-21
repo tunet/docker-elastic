@@ -1,0 +1,55 @@
+DELETE /users
+
+GET /users/_mapping
+
+PUT /users
+{
+  "mappings": {
+    "properties": {
+      "first_name": {
+        "type": "text",
+        "fields": {
+          "keyword": { "type": "keyword" }
+        }
+      },
+      "last_name": { "type": "text" },
+      "email": { "type": "keyword" }
+    }
+  }
+}
+
+PUT /users/_doc/1
+{
+  "first_name": "Alexander Alexandrovich",
+  "last_name": "Kulba"
+}
+
+GET /users/_search
+{
+  "query": {
+    "term": {
+      "first_name.keyword": "Alexander Alexandrovich"
+    }
+  }
+}
+
+GET /users/_search
+{
+  "query": {
+    "match": {
+      "first_name": "alexander alexandrovich"
+    }
+  }
+}
+
+GET /users/_search
+{
+  "query": {
+    "match": {
+      "first_name": {
+        "query": "alexander alexandrovich",
+        "operator": "and"
+      }
+    }
+  }
+}
